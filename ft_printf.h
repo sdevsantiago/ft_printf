@@ -6,14 +6,14 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 18:21:23 by sede-san          #+#    #+#             */
-/*   Updated: 2024/11/26 14:27:48 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/04/21 22:57:05 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include "Libft/libft.h"
+# include "lib/Libft/libft.h"
 # include <stdarg.h>
 # include <stdint.h>
 

@@ -6,7 +6,7 @@
 #    By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 19:07:42 by sede-san          #+#    #+#              #
-#    Updated: 2024/11/27 20:00:22 by sede-san         ###   ########.fr        #
+#    Updated: 2025/04/21 23:28:06 by sede-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,25 +53,43 @@ OBJ = $(SRC:.c=.o)
 # Compile all
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	$(MAKE) -C Libft all bonus
-	cp Libft/libft.a $(NAME)
+$(NAME): libft $(OBJ)
+	cp $(LIBFT) $(NAME)
 	ar rcs $(NAME) $(OBJ)
 	mv $(NAME) libftprintf.a
 
 # Clean object files
 clean:
-	cd Libft && $(MAKE) clean
+	$(MAKE) -C $(LIBFT_PATH) clean
 	rm -f $(OBJ)
 
 # Clean object files and library
 fclean: clean
-	cd Libft && $(MAKE) fclean
-	rm -f libftprintf.a
+	rm -rf $(LIB_PATH)
 	rm -f $(OBJ)
 
 # Recompile
 re: fclean all
+
+# ****************************** Libraries ********************************** #
+
+LIB_PATH = lib
+
+LIBFT_PATH = $(LIB_PATH)/Libft
+
+LIBFT = $(LIBFT_PATH)/libft.a
+
+libft:
+	if [ ! -d $(LIBFT_PATH) ]; then \
+		git clone git@github.com:sdevsantiago/Libft.git $(LIBFT_PATH); \
+		$(MAKE) -C $(LIBFT_PATH) all bonus; \
+	elif [ ! -x $(LIBFT) ]; then \
+		$(MAKE) -C $(LIBFT_PATH) re bonus; \
+	else \
+		cd $(LIBFT_PATH); \
+		git pull; \
+		cd -; \
+	fi
 
 # *********************************** Phony ********************************** #
 .PHONY = all clean fclean re
