@@ -67,6 +67,7 @@ clean:
 fclean: clean
 	rm -rf $(LIB_PATH)
 	rm -f $(OBJ)
+	rm -f libftprintf.a
 
 # Recompile
 re: fclean all
