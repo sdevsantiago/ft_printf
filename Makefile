@@ -6,7 +6,7 @@
 #    By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 19:07:42 by sede-san          #+#    #+#              #
-#    Updated: 2025/08/25 16:58:29 by sede-san         ###   ########.fr        #
+#    Updated: 2025/08/26 00:27:39 by sede-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,7 +91,8 @@ all: libft $(NAME)
 # Compile project
 $(NAME): $(OBJS)
 	@echo "$(YELLOW)$(EMOJI_BOX) Linking...$(RESET)"
-	ar rcs $(NAME) $(OBJS) $(LIBFT_BIN)
+	@cp $(LIBFT_BIN) $(NAME)
+	ar rcs $(NAME) $(OBJS)
 	@echo "$(GREEN)$(EMOJI_CHECK) Linked.$(RESET)"
 
 # Clean object files

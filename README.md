@@ -32,7 +32,7 @@
 
 > The purpose of this project is to recode C's original function printf().
 
-This library reimplements the core functionality of the standard `printf()` function, integrating it into the [`libft`](https://github.com/sdevsantiago/Libft) library.
+This library reimplements the core functionality of the standard `printf()` function.
 
 **Features:**
 - **Full variadic argument support**: handles variable number of arguments using `va_list`

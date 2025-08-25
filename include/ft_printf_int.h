@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 02:55:58 by sede-san          #+#    #+#             */
-/*   Updated: 2025/08/25 03:38:27 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/08/26 00:28:56 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #ifndef FT_PRINTF_INT_H
 # define FT_PRINTF_INT_H
 
+# include "libft.h"
 # include <stdint.h>
 
 // ft_printf_putchar.c
