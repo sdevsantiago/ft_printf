@@ -6,11 +6,12 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:22:51 by sede-san          #+#    #+#             */
-/*   Updated: 2024/11/27 20:23:36 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/08/25 03:02:45 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_printf.h"
+#include "ft_printf.h"
+#include "ft_printf_int.h"
 
 int	ft_printf_putuint(unsigned int const n)
 {

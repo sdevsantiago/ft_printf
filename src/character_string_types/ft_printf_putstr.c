@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_putptr.c                                 :+:      :+:    :+:   */
+/*   ft_printf_putstr.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/14 21:11:28 by sede-san          #+#    #+#             */
-/*   Updated: 2024/12/03 16:31:09 by sede-san         ###   ########.fr       */
+/*   Created: 2024/11/14 21:25:18 by sede-san          #+#    #+#             */
+/*   Updated: 2025/08/25 03:03:56 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_printf.h"
+#include "ft_printf.h"
+#include "ft_printf_int.h"
 
-int	ft_printf_putptr(uintptr_t const ptr)
+int	ft_printf_putstr(char const *str)
 {
-	int		len;
-	char	*ptr_str;
+	int	len;
 
-	if (!ptr)
-		return (ft_printf_putstr("(nil)"));
-	ptr_str = ft_ultoa_base((unsigned long int)ptr, "0123456789abcdef");
-	if (!ptr_str)
-		return (0);
-	len = ft_printf_putstr("0x");
-	len += ft_printf_putstr(ptr_str);
-	free(ptr_str);
+	len = 0;
+	if (!str)
+		len = ft_printf_putstr("(null)");
+	while (str && *str)
+	{
+		len += ft_printf_putchar(*str);
+		str++;
+	}
 	return (len);
 }

@@ -6,91 +6,150 @@
 #    By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 19:07:42 by sede-san          #+#    #+#              #
-#    Updated: 2025/04/22 21:40:19 by sede-san         ###   ########.fr        #
+#    Updated: 2025/08/25 16:58:29 by sede-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ******************************* Output files ******************************* #
-# Library name
-NAME = ft_printf.a
+
+# Project name
+NAME = libftprintf.a
 
 # ************************** Compilation variables *************************** #
+
 # Compiler
 CC = cc
 
 # Compilation flags
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -Wunreachable-code # -Ofast
+
+# Additional headers
+HEADERS = -I $(INCLUDE_PATH) -I $(LIBFT_INCLUDE_PATH)
+
+# Debug flags, execute with DEBUG=1 -> make DEBUG=1
+DFLAGS = -g3
+ifeq ($(DEBUG), 1)
+	CFLAGS += $(DFLAGS)
+endif
+
+# Make command with no-print-directory flag
+MAKE += --no-print-directory
+
+# ***************************** Style variables ****************************** #
+
+# Define color codes
+RED = \033[0;31m
+GREEN = \033[0;32m
+YELLOW = \033[0;33m
+BLUE = \033[0;34m
+RESET = \033[0m # No Color
+
+# Emojis
+EMOJI_BROOM = 🧹
+EMOJI_CHECK = ✅
+EMOJI_CROSS = ❌
+EMOJI_WRENCH = 🔧
+EMOJI_BOX = 📦
 
 # ****************************** Source files ******************************** #
+
+# Source files path
+SRC_PATH = src
+
+# Source files
 SRC = \
-ft_printf.c
+	$(SRC_PATH)/ft_printf.c									\
+	$(SRC_PATH)/character_string_types/ft_printf_putchar.c	\
+	$(SRC_PATH)/character_string_types/ft_printf_putstr.c	\
+	$(SRC_PATH)/integer_types/ft_printf_putint.c			\
+	$(SRC_PATH)/integer_types/ft_printf_putuint.c			\
+	$(SRC_PATH)/memdir_types/ft_printf_putptr.c
 
-CHARACTER_STRING_PATH = character_string_types
-
-SRC += \
-$(CHARACTER_STRING_PATH)/ft_printf_putchar.c \
-$(CHARACTER_STRING_PATH)/ft_printf_putstr.c
-
-INTEGER_PATH = integer_types
-
-SRC += \
-$(INTEGER_PATH)/ft_printf_putint.c	\
-$(INTEGER_PATH)/ft_printf_putuint.c
-
-MEMDIR_PATH = memdir_types
-
-SRC += \
-$(MEMDIR_PATH)/ft_printf_putptr.c
+# Include path
+INCLUDE_PATH = ./include
 
 # ****************************** Object files ******************************** #
-OBJ = $(SRC:.c=.o)
 
-# Compile object files
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+# Object files path
+OBJS_PATH = build
+
+# Source files and destination paths
+OBJS = $(SRC:$(SRC_PATH)/%.c=$(OBJS_PATH)/%.o)
+
+# Compile as object files
+$(OBJS_PATH)/%.o: $(SRC_PATH)/%.c
+	@mkdir -p $(@D)
+	@$(CC) $(CFLAGS) -c $< -o $@ $(HEADERS)
+	@echo "$< compiled"
 
 # ********************************* Rules ************************************ #
-# Compile all
-all: $(NAME)
 
-$(NAME): libft $(OBJ)
-	cp $(LIBFT) $(NAME)
-	ar rcs $(NAME) $(OBJ)
-	mv $(NAME) libftprintf.a
+# Compile all
+all: libft $(NAME)
+.PHONY: all
+
+# Compile project
+$(NAME): $(OBJS)
+	@echo "$(YELLOW)$(EMOJI_BOX) Linking...$(RESET)"
+	ar rcs $(NAME) $(OBJS) $(LIBFT_BIN)
+	@echo "$(GREEN)$(EMOJI_CHECK) Linked.$(RESET)"
 
 # Clean object files
 clean:
-	$(MAKE) -C $(LIBFT_PATH) clean
-	rm -f $(OBJ)
+	@echo "$(RED)$(EMOJI_BROOM) Cleaning object files...$(RESET)"
+	@rm -rf $(OBJS_PATH)
+	@echo "$(GREEN)$(EMOJI_CHECK) Object files cleaned.$(RESET)"
+.PHONY: clean
 
-# Clean object files and library
+# Clean object files and binaries
 fclean: clean
-	rm -rf $(LIB_PATH)
-	rm -f $(OBJ)
-	rm -f libftprintf.a
+	@echo "$(RED)$(EMOJI_BROOM) Cleaning binaries...$(RESET)"
+	@rm -f $(NAME)
+	@if [ -d $(LIBFT_PATH) ]; then \
+		$(MAKE) -C $(LIBFT_PATH) fclean; \
+	fi
+	@echo "$(GREEN)$(EMOJI_CHECK) Binaries cleaned.$(RESET)"
+.PHONY: fclean
 
 # Recompile
 re: fclean all
+.PHONY: re
 
-# ****************************** Libraries ********************************** #
+# ********************************* Libraries ******************************** #
 
+# Compile libraries
+lib:
+	@$(MAKE) libft
+.PHONY: lib
+
+# Compile file with libraries
+LIBS = $(LIBFT_BIN)
+
+# Libraries path
 LIB_PATH = lib
 
-LIBFT_PATH = $(LIB_PATH)/Libft
+# ** Libft ** #
 
-LIBFT = $(LIBFT_PATH)/libft.a
+LIBFT = Libft
+LIBFT_REPO = https://github.com/sdevsantiago/Libft.git
+LIBFT_PATH = $(LIB_PATH)/$(LIBFT)
+LIBFT_INCLUDE_PATH = $(LIBFT_PATH)
+LIBFT_BIN = $(LIBFT_PATH)/libft.a
 
-libft:
-	if [ ! -d $(LIBFT_PATH) ]; then \
-		git clone https://github.com/sdevsantiago/Libft.git $(LIBFT_PATH); \
-		$(MAKE) -C $(LIBFT_PATH) all bonus; \
-	elif [ ! -x $(LIBFT) ]; then \
-		$(MAKE) -C $(LIBFT_PATH) re bonus; \
-	else \
-		cd $(LIBFT_PATH); \
-		git pull; \
-		cd -; \
+libft: $(LIBFT_BIN)
+
+$(LIBFT_BIN):
+	@if [ ! -d $(LIBFT_PATH) ]; then \
+		echo "$(YELLOW)$(EMOJI_WRENCH) Cloning $(LIBFT)...$(RESET)"; \
+		git clone $(LIBFT_REPO) $(LIBFT_PATH); \
+		rm -rf $(LIBFT_PATH)/.git; \
+		echo "$(GREEN)$(EMOJI_CHECK) $(LIBFT) cloned...$(RESET)"; \
 	fi
-
-# *********************************** Phony ********************************** #
-.PHONY = all clean fclean re
+	@if [ ! -f $(LIBFT_BIN) ]; then \
+		echo "$(YELLOW)$(EMOJI_WRENCH) Compiling $(LIBFT)...$(RESET)"; \
+		$(MAKE) -C $(LIBFT_PATH) all clean; \
+		echo "$(GREEN)$(EMOJI_CHECK) $(LIBFT) compiled.$(RESET)"; \
+	else \
+		echo "$(GREEN)$(EMOJI_CHECK) $(LIBFT) already compiled.$(RESET)"; \
+	fi
+.PHONY: libft

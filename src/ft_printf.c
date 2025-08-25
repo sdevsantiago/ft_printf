@@ -6,11 +6,12 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 17:23:51 by sede-san          #+#    #+#             */
-/*   Updated: 2024/11/26 16:38:16 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/08/25 03:03:07 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "ft_printf_int.h"
 
 static int	print_specifier(int const specifier, va_list args)
 {
