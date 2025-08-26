@@ -6,14 +6,16 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:22:51 by sede-san          #+#    #+#             */
-/*   Updated: 2025/08/25 03:02:45 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/08/26 01:19:03 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "ft_printf_int.h"
 
-int	ft_printf_putuint(unsigned int const n)
+int	ft_printf_putuint(
+	int fd,
+	unsigned int const n)
 {
 	int		len;
 	char	*nb;
@@ -21,12 +23,14 @@ int	ft_printf_putuint(unsigned int const n)
 	nb = ft_uitoa(n);
 	if (!nb)
 		return (0);
-	len = ft_printf_putstr(nb);
+	len = ft_printf_putstr(fd, nb);
 	free(nb);
 	return (len);
 }
 
-int	ft_printf_putuint_oct(unsigned int const n)
+int	ft_printf_putuint_oct(
+	int fd,
+	unsigned int const n)
 {
 	int		len;
 	char	*nb;
@@ -34,12 +38,15 @@ int	ft_printf_putuint_oct(unsigned int const n)
 	nb = ft_uitoa_base(n, "01234567");
 	if (!nb)
 		return (0);
-	len = ft_printf_putstr(nb);
+	len = ft_printf_putstr(fd, nb);
 	free(nb);
 	return (len);
 }
 
-int	ft_printf_putuint_hex(unsigned int const n, int const specifier)
+int	ft_printf_putuint_hex(
+	int fd,
+	unsigned int const n,
+	int const specifier)
 {
 	int		len;
 	char	*nb;
@@ -50,7 +57,7 @@ int	ft_printf_putuint_hex(unsigned int const n, int const specifier)
 		nb = ft_uitoa_base(n, "0123456789abcdef");
 	if (!nb)
 		return (0);
-	len = ft_printf_putstr(nb);
+	len = ft_printf_putstr(fd, nb);
 	free(nb);
 	return (len);
 }

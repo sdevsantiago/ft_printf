@@ -32,7 +32,7 @@
 
 > The purpose of this project is to recode C's original function printf().
 
-This library reimplements the core functionality of the standard `printf()` function.
+This library reimplements the core functionality of the standard `printf()` and `fprintf()` functions. It also implements the `ft_eprintf()` function.
 
 **Features:**
 - **Full variadic argument support**: handles variable number of arguments using `va_list`
@@ -53,15 +53,18 @@ This library reimplements the core functionality of the standard `printf()` func
 | `%p` | Pointer | Prints a pointer address in hexadecimal format |
 | `%%` | Literal | Prints a literal '%' character |
 
-### 🔧 Function Prototype
+### 🔧 Function Prototypes
 
 ```c
-int ft_printf(const char *format, ...);
+int ft_printf(char const *format, ...);
+int ft_fprintf(int fd, char const *format, ...);
+int ft_eprintf(char const *format, ...);
 ```
 
 **Parameters:**
 - `format`: Format string containing text and format specifiers
 - `...`: Variable arguments corresponding to format specifiers
+- `fd` (for `ft_fprintf`): File descriptor to which output is written
 
 **Return value:**
 - Number of characters printed on success
@@ -136,6 +139,7 @@ For detailed info, refer to this project [subject](docs/en.subject.pdf).
 
 ```c
 #include "ft_printf.h"
+#include <fcntl.h>
 
 int main(void)
 {
@@ -157,11 +161,21 @@ int main(void)
     ft_printf("Memory address: %p, Value in hex: 0x%x\n", ptr, value);
 
     // Error handling
-    int chars_printed = ft_printf("Test: %d\n", 42);
-    if (chars_printed == -1) {
+    int chars_printed = ft_printf("%", 42);
+    if (chars_printed == -1)
+    {
         // Handle error
     }
 
+    int fd = open("file", O_WRONLY);
+    if (fd != -1)
+    {
+        ft_fprintf(fd, "Hello %d\n", 42);
+    }
+    else
+    {
+        ft_eprintf("error: unable to write on file\n");
+    }
     return (0);
 }
 ```
