@@ -17,13 +17,9 @@
   <br>
   <img src="https://img.shields.io/github/last-commit/sdevsantiago/ft_printf?display_timestamp=committer&style=for-the-badge&labelColor=black" alt="Last commit">
   <br>
-  <a href=".github/workflows/norminette.yml">
-    <img src="https://github.com/sdevsantiago/ft_printf/actions/workflows/norminette.yml/badge.svg">
-  </a>
-  <a href=".github/workflows/makefile.yml">
-    <img src="https://github.com/sdevsantiago/ft_printf/actions/workflows/makefile.yml/badge.svg">
-  </a>
-
+  <img src="https://github.com/sdevsantiago/ft_printf/actions/workflows/norminette.yml/badge.svg">
+  <img src="https://github.com/sdevsantiago/ft_printf/actions/workflows/makefile.yml/badge.svg">
+  
 </div>
 
 ---
