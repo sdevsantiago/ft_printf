@@ -14,9 +14,9 @@
   <!-- Info badges -->
   <img src="https://img.shields.io/badge/Score-100%2F100-brightgreen?style=for-the-badge&labelColor=black" alt="Score">
   <img src="https://img.shields.io/badge/Language-C-blue?style=for-the-badge&labelColor=black" alt="Language">
-
+  <br>
   <img src="https://img.shields.io/github/last-commit/sdevsantiago/ft_printf?display_timestamp=committer&style=for-the-badge&labelColor=black" alt="Last commit">
-
+  <br>
   <a href=".github/workflows/norminette.yml">
     <img src="https://github.com/sdevsantiago/ft_printf/actions/workflows/norminette.yml/badge.svg">
   </a>
