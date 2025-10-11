@@ -7,6 +7,7 @@ jobs:
   check-norminette:
     name: Norminette
     runs-on: ubuntu-latest
+    if: ${{ github.repository != 'sdevsantiago/42_project_template' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
